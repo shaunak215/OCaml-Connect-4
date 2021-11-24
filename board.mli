@@ -11,19 +11,15 @@ type player = P1 | P2 | Empty
 *)
 type t
 
-(*
-    This will be value which indicates whose turn it is
-*)
-type turn = player
-
 val init : t
-
-val cur_player : player
-
-val cur_board : t
 
 val is_valid_move : int -> t -> bool
 
+(*
+    Will be called after verifying a valid move with is_valid_move 
+*)
 val insert_piece : int -> t -> t
 
 val game_over : t -> bool * player
+
+val to_string : t -> unit
