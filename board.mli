@@ -20,4 +20,11 @@ val is_valid_move : int -> t -> bool
 *)
 val insert_piece : int -> t -> t
 
-val game_over : t -> bool * player
+(*
+    Given the most recent col which a move was made in and a board
+    Return if the game is over and who won
+    If not over -> false, Empty
+    If tie -> true, Empty
+    If player win -> true, player
+*)
+val game_over : int -> t -> bool * player
