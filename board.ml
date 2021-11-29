@@ -93,11 +93,11 @@ let insert_piece (col: int) (brd: t): t =
 
   let game_over (col: int) (brd: t) = 
     let b, next_player = brd in
-    if is_tie b then true, Empty
-    else if is_win col b then
+    if is_win col b then
       match next_player with
       | P1 -> true, P2
       | P2 -> true, P1
       | Empty -> failwith "Empty in game over"
+    else if is_tie b then true, Empty
     else false, Empty
 
