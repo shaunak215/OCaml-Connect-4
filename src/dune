@@ -1,0 +1,6 @@
+(library
+  (name connect4)
+  (modules
+    board game)
+  (libraries
+    core))

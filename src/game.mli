@@ -20,7 +20,7 @@ val save_game : Board.t -> string * int
 (*
     TO DO
 *)
-val move : Board.t -> int -> t
+val move : Board.t -> int -> Board.t
 
 (*
     TO DO
@@ -30,6 +30,6 @@ val move : Board.t -> int -> t
 *)
 val render : Board.t -> unit
 
-val pll_to_arr : Board.player list list -> array
+val pll_to_arr : Board.player list list -> string array
 
-val arr_to_pll : array -> Board.player list list
+val arr_to_pll : string array -> Board.player list list
