@@ -8,6 +8,11 @@ type player = P1 | P2 | Empty
 
 type t = player list list * player
 
+let to_string (p:player) : string = 
+  match p with 
+  | P1 -> "p1"
+  | P2 -> "p2"
+  | Empty -> "na"
 let init: t = [[];[];[];[];[];[];[]], P1
 
 let is_valid_move (col: int) (brd: t): bool =

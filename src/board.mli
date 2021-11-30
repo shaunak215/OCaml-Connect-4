@@ -11,6 +11,8 @@ type player = P1 | P2 | Empty
 *)
 type t = player list list * player
 
+val to_string : player -> string
+
 val init : t
 
 val is_valid_move : int -> t -> bool

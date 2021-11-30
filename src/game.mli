@@ -18,9 +18,10 @@ val load_game : string * int -> Board.t
 val save_game : Board.t -> string * int
 
 (*
-    TO DO
+    If move is completed return new board and true
+    otherwise return original board and false
 *)
-val move : Board.t -> int -> Board.t
+val move : Board.t -> int -> Board.t * bool
 
 (*
     TO DO

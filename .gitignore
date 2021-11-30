@@ -8,9 +8,6 @@
 *.cmxs
 *.cmxa
 
-# dune project file
-dune-project
-
 # ocamlbuild working directory
 _build/
 
