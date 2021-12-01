@@ -1,4 +1,3 @@
-
 (*
     initializes a new game with an empty board
     int value determines number of players 1 (against ai) or 2
@@ -7,13 +6,14 @@ val new_game : int -> Board.t
 
 (*
     initializes a saved game with that board
-    int value determines number of players 1 (against ai) or 2
+    1st int value determines number of players 1 (against ai) or 2
 *)
-val load_game : string * int -> Board.t
+val load_game : string -> int -> Board.t
 
 (*
     saves the current game state in the form of
     a string int pair representation of the game
+    1st int value determines number of players 1 (against ai) or 2
 *)
 val save_game : Board.t -> string * int
 

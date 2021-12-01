@@ -3,15 +3,32 @@
 open Board
 open Core
 
-let new_game (p : int) : Board.t = assert false
-
-let load_game (game : string * int) : Board.t = assert false
-
-let save_game (board : Board.t) : string * int = assert false
+let new_game (p : int) : Board.t = init
 
 let move (board : Board.t) (col : int) : Board.t * bool =
   if is_valid_move col board then (insert_piece col board, true)
   else (board, false)
+
+(* might need to add a check that the game string is all valid and all cols are 1-7 and ints *)
+let load_game (game : string) (num : int) : Board.t =
+  String.fold game ~init ~f:(fun b el ->
+      printf "%c" el;
+      let col = int_of_string @@ Char.escaped el in
+      let accum, _ = move b col in
+      accum)
+
+let save_game (board : Board.t) : string * int =
+  let b, _ = board in
+  let compress =
+    List.foldi b ~init:"" ~f:(fun i comp col ->
+        let new_s =
+          String.init (List.length col) ~f:(fun _ ->
+              string_of_int @@ (i + 1) |> String.to_list |> fun temp ->
+              List.hd_exn temp)
+        in
+        String.concat [ comp; new_s ])
+  in
+  (compress, 2)
 
 let print_list (l : player list) : unit =
   List.iter l ~f:(fun el -> printf "%s " (to_string el));
