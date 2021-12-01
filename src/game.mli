@@ -30,7 +30,3 @@ val move : Board.t -> int -> Board.t * bool
     to web page
 *)
 val render : Board.t -> unit
-
-val pll_to_arr : Board.player list list -> string array
-
-val arr_to_pll : string array -> Board.player list list

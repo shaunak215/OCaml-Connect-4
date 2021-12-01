@@ -42,7 +42,3 @@ let get_row (row : int) (b : player list list) : player list =
 let render (board : Board.t) : unit =
   let b, _ = board in
   List.iter [ 5; 4; 3; 2; 1; 0 ] ~f:(fun el -> print_list @@ get_row el b)
-
-let pll_to_arr (p : Board.player list list) : string array = assert false
-
-let arr_to_pll (ar : string array) : Board.player list list = assert false
