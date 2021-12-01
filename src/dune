@@ -4,3 +4,9 @@
     board game)
   (libraries
     core))
+
+
+(executable
+ (name main)
+ (modules main)
+ (libraries connect4 core))
