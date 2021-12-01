@@ -40,5 +40,5 @@ let get_row (row : int) (b : player list list) : player list =
          match List.nth l row with Some p -> p :: init | None -> Empty :: init)
 
 let render (board : Board.t) : unit =
-  let b, _ = board in
-  List.iter [ 5; 4; 3; 2; 1; 0 ] ~f:(fun el -> print_list @@ get_row el b)
+  let b, player = board in
+  List.iter [ 5; 4; 3; 2; 1; 0 ] ~f:(fun el -> print_list @@ get_row el b); printf "It is player %s's turn\n\n" (Board.to_string player)
