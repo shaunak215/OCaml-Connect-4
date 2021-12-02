@@ -1,7 +1,6 @@
-
-(* 
-    This is the representation of a player, 
-    It will be used for marking spots and determining whose turn it is
+(*
+     This is the representation of a player,
+     It will be used for marking spots and determining whose turn it is
 *)
 type player = P1 | P2 | Empty
 

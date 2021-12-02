@@ -26,9 +26,13 @@ let rec play_game (b : Board.t) (last_col : int) =
             else
               print_string "You entered an invalid column. Please try again\n";
             play_game b last_col
-        | 'q' -> print_string "Goodbye!"; exit 1
+        | 'q' ->
+            print_string "Goodbye!";
+            exit 1
         | _ ->
             print_string "You entered an invalid command. Please try again.\n"
-      with _ -> print_endline "You force quit the game!";  exit 1)
+      with _ ->
+        print_endline "You force quit the game!";
+        exit 1)
 
 let () = play_game Board.init 1
