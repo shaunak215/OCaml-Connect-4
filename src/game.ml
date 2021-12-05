@@ -12,7 +12,6 @@ let move (board : Board.t) (col : int) : Board.t * bool =
 (* might need to add a check that the game string is all valid and all cols are 1-7 and ints *)
 let load_game (game : string) (num : int) : Board.t =
   String.fold game ~init ~f:(fun b el ->
-      printf "%c" el;
       let col = int_of_string @@ Char.escaped el in
       let accum, _ = move b col in
       accum)

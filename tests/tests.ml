@@ -1,6 +1,7 @@
 open Core;;
 open OUnit2;;
 open Connect4.Board;;
+open Connect4.Game;;
 
 (* we should have diff files for testing the board and game and diff files but not sure how to do that *)
 
@@ -59,9 +60,48 @@ let board_tests =
     "Game Over" >:: test_game_over;
   ]
 
+let test_new_game _ = 
+  assert_equal  ([ []; []; []; []; []; []; [] ], P1) @@ new_game 0;
+;;
+
+let test_move _ = 
+  assert_equal (([ [P1]; []; []; []; []; []; [] ], P2), true) @@ move ([ []; []; []; []; []; []; [] ], P1) 1;
+  assert_equal (([ [P1;P2]; []; []; []; []; []; [] ], P1), true) @@ move ([ [P1]; []; []; []; []; []; [] ], P2) 1;
+  assert_equal (([ []; []; []; []; []; []; [] ], P1), false) @@ move ([ []; []; []; []; []; []; [] ], P1) 0;
+  assert_equal (([ []; []; []; []; []; []; [] ], P1), false) @@ move ([ []; []; []; []; []; []; [] ], P1) 8;
+  assert_equal (([ [P1;P2;P1;P2;P1;P2]; []; []; []; []; []; [] ], P1), false) @@ move ([ [P1;P2;P1;P2;P1;P2]; []; []; []; []; []; [] ], P1) 1;
+;;
+
+let test_load_game _ = 
+  assert_equal ([ []; []; []; []; []; []; [] ], P1)  @@ load_game "" 1; 
+  assert_equal ([ [P1]; []; []; []; []; []; [] ], P2)  @@ load_game "1" 1;
+  assert_equal ([ [P1;P2]; []; []; []; []; []; [] ], P1)  @@ load_game "11" 1;
+  assert_equal ([ [P1]; [P2]; [P1]; [P2]; [P1]; [P2]; [P1] ], P2)  @@ load_game "1234567" 1;
+  (* assert_equal ([ [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2] ], P1)  @@ load_game "12345671234567" 1; *)
+  (* assert_equal ([ [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2] ], P1)  @@ load_game "11223344556677" 1; *)
+;;
+
+let test_save_game _ = 
+  assert_equal ("",2) @@ save_game ([ []; []; []; []; []; []; [] ], P1);
+  assert_equal ("1",2) @@ save_game ([ [P1]; []; []; []; []; []; [] ], P2);
+  assert_equal ("11",2) @@ save_game ([ [P1;P2]; []; []; []; []; []; [] ], P1);
+  assert_equal ("1234567",2) @@ save_game ([ [P1]; [P2]; [P1]; [P2]; [P1]; [P2]; [P1] ], P2);
+  (* assert_equal ("11223344556677",2) @@ save_game ([ [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2] ], P1); *)
+  assert_equal ("111111",2) @@ save_game ([ [P1;P2;P1;P2;P1;P2]; []; []; []; []; []; [] ], P1);
+;;
+
+let game_tests = 
+  "Game Tests" >: test_list [
+    "New Game" >:: test_new_game;
+    "Move" >:: test_move;
+    "Load Game" >:: test_load_game;
+    "Save Game" >:: test_save_game;
+  ]
+
 let series = 
   "Connect 4 Tests" >::: [
     board_tests;
+    game_tests;
   ]
 
 let () = run_test_tt_main series
