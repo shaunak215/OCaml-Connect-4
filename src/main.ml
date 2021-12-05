@@ -6,11 +6,13 @@ open Connect4
 let get_input (s : string) : char =
   if String.length s > 1 then 'f' else String.get s 0
 
+  (* newline currently ends the game *)
+
 let rec play_game (b : Board.t) (last_col : int) =
   match Board.game_over last_col b with
-  | true, Board.Empty -> print_string "The game ended in a tie!"
-  | true, Board.P1 -> print_string "P1 Won!"
-  | true, Board.P2 -> print_string "P2 Won!"
+  | true, Board.Empty -> print_string "The game ended in a tie!"; exit 1
+  | true, Board.P1 -> print_string "P1 Won!"; exit 1
+  | true, Board.P2 -> print_string "P2 Won!"; exit 1
   | false, _ -> (
       print_string "\n";
       Game.render b;

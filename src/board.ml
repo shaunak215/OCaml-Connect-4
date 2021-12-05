@@ -14,13 +14,11 @@ let to_string (p : player) : string =
 let init : t = ([ []; []; []; []; []; []; [] ], P1)
 
 let is_valid_move (col : int) (brd : t) : bool =
-  if Int.( < ) col 0 || Int.( > ) col 7 then false
+  if Int.( < ) col 1 || Int.( > ) col 7 then false
   else
     let b, _ = brd in
-    let col_list = List.nth b (col - 1) in
-    match col_list with
-    | Some l -> if List.length l <= 6 then true else false
-    | None -> false
+    let l = List.nth_exn b (col - 1) in
+    if List.length l < 6 then true else false
 
 let insert_piece (col : int) (brd : t) : t =
   let b, player = brd in
