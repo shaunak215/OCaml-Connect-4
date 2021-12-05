@@ -27,7 +27,7 @@ let save_game (board : Board.t) : string * int =
         in
         String.concat [ comp; new_s ])
   in
-  (compress, 2)
+  (compress, 2)  
 
 let print_list (l : player list) : unit =
   List.iter l ~f:(fun el -> printf "%s " (to_string el));
