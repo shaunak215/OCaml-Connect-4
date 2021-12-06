@@ -16,18 +16,35 @@ let load_game (game : string) (num : int) : Board.t =
       let accum, _ = move b col in
       accum)
 
-let save_game (board : Board.t) : string * int =
+let get_row (row : int) (b : player list list) : player list =
+  List.rev
+  @@ List.fold b ~init:[] ~f:(fun init l ->
+         match List.nth l row with Some p -> p :: init | None -> Empty :: init)
+
+let make_row_list (board : player list list) (row : int) : int list * int list =
+  let r = get_row row board in
+  List.foldi r ~init:([], []) ~f:(fun i (p1, p2) p ->
+      match p with
+      | P1 -> ((i + 1) :: p1, p2)
+      | P2 -> (p1, (i + 1) :: p2)
+      | Empty -> (p1, p2))
+  |> fun (p1, p2) -> (List.rev p1, List.rev p2)
+
+let make_full_list (board : Board.t) : int list * int list =
   let b, _ = board in
-  let compress =
-    List.foldi b ~init:"" ~f:(fun i comp col ->
-        let new_s =
-          String.init (List.length col) ~f:(fun _ ->
-              string_of_int @@ (i + 1) |> String.to_list |> fun temp ->
-              List.hd_exn temp)
-        in
-        String.concat [ comp; new_s ])
-  in
-  (compress, 2)  
+  List.fold [ 0; 1; 2; 3; 4; 5 ] ~init:([], []) ~f:(fun (p1, p2) el ->
+      let new_p1, new_p2 = make_row_list b el in
+      (List.append p1 new_p1, List.append p2 new_p2))
+
+let combine_lists (p1 : int list) (p2 : int list) : int list =
+  List.foldi p1 ~init:[] ~f:(fun i res el ->
+      let temp = el :: res in
+      match List.nth p2 i with Some v -> v :: temp | None -> temp)
+let save_game (board : Board.t) : string * int =
+  let p1, p2 = make_full_list board in
+  List.fold (combine_lists p1 p2) ~init:"" ~f:(fun accum el ->
+      String.concat [ string_of_int el; accum ])
+  |> fun res -> (res, 2)
 
 let print_list (l : player list) : unit =
   List.iter l ~f:(fun el -> printf "%s " (to_string el));

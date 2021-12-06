@@ -86,8 +86,8 @@ let test_save_game _ =
   assert_equal ("1",2) @@ save_game ([ [P1]; []; []; []; []; []; [] ], P2);
   assert_equal ("11",2) @@ save_game ([ [P1;P2]; []; []; []; []; []; [] ], P1);
   assert_equal ("1234567",2) @@ save_game ([ [P1]; [P2]; [P1]; [P2]; [P1]; [P2]; [P1] ], P2);
-  (* assert_equal ("11223344556677",2) @@ save_game ([ [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2] ], P1); *)
-  (* assert_equal ("11223344556677", 2) @@ save_game ([ [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2] ], P1); *)
+  assert_equal ("12345671234567",2) @@ save_game ([ [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2] ], P1);
+  assert_equal ("11223344556677", 2) @@ save_game ([ [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2] ], P1);
   assert_equal ("111111",2) @@ save_game ([ [P1;P2;P1;P2;P1;P2]; []; []; []; []; []; [] ], P1);
 ;;
 
