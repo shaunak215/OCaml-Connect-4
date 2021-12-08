@@ -1,10 +1,7 @@
 (library
-  (name connect4)
-  (modules
-    board game)
-  (libraries
-    core))
-
+ (name connect4)
+ (modules board game ai)
+ (libraries core))
 
 (executable
  (name main)
