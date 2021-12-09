@@ -73,7 +73,7 @@ let connect_four (plist : player list) : bool =
     List.group plist ~break:(fun p1 p2 ->
         match (p1, p2) with P1, P1 -> false | P2, P2 -> false | _, _ -> true)
   in
-  let has_four = List.filter check_list ~f:(fun l -> List.length l = 4) in
+  let has_four = List.filter check_list ~f:(fun l -> List.length l >= 4) in
   if List.length has_four = 0 then false else true
 
 let is_win (col : int) (b : player list list) : bool =
