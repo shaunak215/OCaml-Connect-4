@@ -61,7 +61,31 @@ and negmax_helper (score : int) (col : int) (b : Board.t) (depth : int) : int =
     else negmax_helper score (col + 1) b depth
   else negmax_helper score (col + 1) b depth
 
-let make_move (b : Board.t) : int list =
+let solve (b : Board.t) : int =
+  let can_win =
+    List.fold [ 1; 2; 3; 4; 5; 6; 7 ] ~init:false ~f:(fun accum el ->
+        if is_winning_move b el then true else false)
+  in
+  if can_win then (42 + 1 - count_moves b) / 2 else negmax b 0
+
+let get_scores (b : Board.t) : int list =
   List.fold [ 1; 2; 3; 4; 5; 6; 7 ] ~init:[] ~f:(fun accum el ->
-      negmax (insert_piece el b) 0 :: accum)
+      if is_valid_move el b then
+        if is_winning_move b el then ((42 + 1 - count_moves b) / 2) :: accum
+        else
+          let score = solve @@ insert_piece el b in
+          -score :: accum
+      else -100 :: accum)
   |> List.rev
+
+let get_best_col (l : int list) : int =
+  let col, score =
+    List.fold [ 4; 3; 5; 2; 6; 1; 7 ] ~init:(0, -100)
+      ~f:(fun (index, max) col ->
+        let v = List.nth_exn l col in
+        if v > max then (col, v) else (index, max))
+  in
+  col
+
+let make_move (b : Board.t) : Board.t =
+  get_scores b |> get_best_col |> fun col -> insert_piece col b

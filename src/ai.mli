@@ -1,3 +1,3 @@
 
-val make_move : Board.t -> int list
+val make_move : Board.t -> Board.t
 

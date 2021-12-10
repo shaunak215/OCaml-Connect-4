@@ -49,6 +49,8 @@ let test_game_over _ =
   assert_equal (false,Empty) @@ game_over 1 ([ [P1;P1;P1]; []; []; []; []; []; [] ], P2);
   assert_equal (false,Empty) @@ game_over 1 ([ [P1]; [P1]; [P1]; []; [P1]; [P1]; [P1] ], P2);
   assert_equal (false,Empty) @@ game_over 1 ([ [P1]; [P1;P1]; [P1;P1;P1]; []; []; []; [] ], P2);
+  assert_equal (true, Empty) @@ game_over 7 ([[P1; P2; P1; P2; P1; P2]; [P1; P2; P1; P2; P1; P2];[P2; P1; P2; P1; P2; P1]; 
+    [P1; P2; P1; P2; P1; P2]; [P1; P2; P1; P2; P1; P2]; [P1; P2; P1; P2; P1; P1]; [P2; P1; P2; P1; P2; P2]], P1)
 ;;
 
 let board_tests = 
