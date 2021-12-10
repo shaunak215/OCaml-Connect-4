@@ -40,7 +40,7 @@ let is_winning_move (b : Board.t) (col : int) : bool =
      else negmax_helper b alpha beta (col + 1) *)
 
 let rec negmax (b : Board.t) (depth : int) : int =
-  if depth > 3 then 0
+  if depth > 5 then 0
   else
     let moves = count_moves b in
     if moves = 42 then 0
@@ -49,17 +49,20 @@ let rec negmax (b : Board.t) (depth : int) : int =
           if is_valid_move el b && is_winning_move b el then false else true)
     then
       let best_score = -42 in
-      negmax_helper best_score 0 b depth
+      negmax_helper best_score [ 4; 3; 5; 2; 6; 1; 7 ] b depth
     else (42 + 1 - moves) / 2
 
-and negmax_helper (score : int) (col : int) (b : Board.t) (depth : int) : int =
-  if col = 8 then score
-  else if is_valid_move col b then
-    let new_b = insert_piece col b in
-    let new_score = -negmax new_b (depth + 1) in
-    if new_score > score then negmax_helper new_score (col + 1) b depth
-    else negmax_helper score (col + 1) b depth
-  else negmax_helper score (col + 1) b depth
+and negmax_helper (score : int) (col : int list) (b : Board.t) (depth : int) :
+    int =
+  match col with
+  | [] -> score
+  | hd :: tl ->
+      if is_valid_move hd b then
+        let new_b = insert_piece hd b in
+        let new_score = -negmax new_b (depth + 1) in
+        if new_score > score then negmax_helper new_score tl b depth
+        else negmax_helper score tl b depth
+      else negmax_helper score tl b depth
 
 let solve (b : Board.t) : int =
   let can_win =
@@ -82,10 +85,10 @@ let get_best_col (l : int list) : int =
   let col, score =
     List.fold [ 4; 3; 5; 2; 6; 1; 7 ] ~init:(0, -100)
       ~f:(fun (index, max) col ->
-        let v = List.nth_exn l col in
+        let v = List.nth_exn l (col - 1) in
         if v > max then (col, v) else (index, max))
   in
   col
 
-let make_move (b : Board.t) : Board.t =
-  get_scores b |> get_best_col |> fun col -> insert_piece col b
+let make_move (b : Board.t) : Board.t * int =
+  get_scores b |> get_best_col |> fun col -> (insert_piece col b, col)
