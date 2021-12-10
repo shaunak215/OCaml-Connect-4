@@ -44,29 +44,47 @@ let get_row (row : int) (b : player list list) : player list =
 
 let get_right_diagonal (row : int) (col : int) (b : player list list) :
     player list =
-  let rec iterate (r : int) (c : int) (diag_list : player list)
+    let rec top_of_diag (row : int) (col : int) : (int * int) =
+      if row + 1 <= 6 && col + 1 <= 5 then top_of_diag (row + 1) (col + 1)
+      else row, col
+    in
+    let rec iterate (r : int) (c : int) (diag_list : player list)
       (b : player list list) : player list =
     match List.nth b c with
-    | None -> diag_list
+    | None ->
+      if r >= 0 && c >= 0 then iterate (r - 1) (c - 1) (Empty :: diag_list) b
+      else diag_list
     | Some l -> (
         match List.nth l r with
-        | None -> diag_list
+        | None ->
+          if r >= 0 && c >= 0 then iterate (r - 1) (c - 1) (Empty :: diag_list) b
+          else diag_list
         | Some p -> iterate (r - 1) (c - 1) (p :: diag_list) b)
   in
-  List.rev @@ iterate row col [] b
+  let top_row, top_col = top_of_diag row col in
+  List.rev @@ iterate top_row top_col [] b
 
 let get_left_diagonal (row : int) (col : int) (b : player list list) :
     player list =
+  let rec top_of_diag (row : int) (col : int) : (int * int) =
+    if row + 1 <= 5 && col - 1 >= 0 then top_of_diag (row + 1) (col - 1)
+    else row, col
+  in
   let rec iterate (r : int) (c : int) (diag_list : player list)
       (b : player list list) : player list =
     match List.nth b c with
-    | None -> diag_list
+    | None -> 
+      if r >= 0 && c <= 6 then iterate (r - 1) (c + 1) (Empty :: diag_list) b
+      else diag_list
     | Some l -> (
         match List.nth l r with
-        | None -> diag_list
+        | None ->
+          if r >= 0 && c <= 6 then iterate (r - 1) (c + 1) (Empty :: diag_list) b
+          else diag_list
         | Some p -> iterate (r - 1) (c + 1) (p :: diag_list) b)
   in
-  List.rev @@ iterate row col [] b
+  let top_row, top_col = top_of_diag row col in
+  List.rev @@ iterate top_row top_col [] b
 
 let connect_four (plist : player list) : bool =
   let check_list =
