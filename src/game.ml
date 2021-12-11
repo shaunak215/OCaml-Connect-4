@@ -10,7 +10,7 @@ let move (board : Board.t) (col : int) : Board.t * bool =
   else (board, false)
 
 (* might need to add a check that the game string is all valid and all cols are 1-7 and ints *)
-let decode_game (game : string) (num : int) : Board.t =
+let decode_game (game : string) : Board.t =
   String.fold game ~init ~f:(fun b el ->
       let col = int_of_string @@ Char.escaped el in
       let accum, _ = move b col in
@@ -40,11 +40,12 @@ let combine_lists (p1 : int list) (p2 : int list) : int list =
   List.foldi p1 ~init:[] ~f:(fun i res el ->
       let temp = el :: res in
       match List.nth p2 i with Some v -> v :: temp | None -> temp)
-let encode_game (board : Board.t) : string * int =
+
+let encode_game (board : Board.t) : string =
   let p1, p2 = make_full_list board in
   List.fold (combine_lists p1 p2) ~init:"" ~f:(fun accum el ->
       String.concat [ string_of_int el; accum ])
-  |> fun res -> (res, 2)
+  |> fun res -> res
 
 let print_list (l : player list) : unit =
   List.iter l ~f:(fun el -> printf "%s " (to_string el));
