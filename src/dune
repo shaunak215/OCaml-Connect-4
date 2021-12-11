@@ -6,7 +6,7 @@
 (executable
  (name server)
  (modules server template)
- (libraries dream)
+ (libraries dream connect4)
  (preprocess (pps lwt_ppx)))
 
 (rule
