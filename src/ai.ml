@@ -4,8 +4,6 @@ open Core
 
 let min_score = -(42 / 2) + 3
 
-(* let max_score = ((42 + 1) / 2) - 3 *)
-
 let table =
   Hashtbl.create
     (module String)
@@ -57,12 +55,29 @@ and negmax_helper (b : Board.t) (alpha : int) (beta : int) (col : int list)
         else negmax_helper b alpha beta tl depth
       else negmax_helper b alpha beta tl depth
 
+let rec solver_helper (b : Board.t) (min : int) (max : int) : int =
+  if min >= max then min
+  else
+    let med = min + ((max - min) / 2) in
+    let med =
+      if med <= 0 && min / 2 < med then min / 2
+      else if med >= 0 && max / 2 > med then max / 2
+      else med
+    in
+    let r = negmax b 0 med (med + 1) in
+    if r <= med then solver_helper b min r else solver_helper b r max
+
 let solve (b : Board.t) : int =
   let can_win =
     List.fold [ 1; 2; 3; 4; 5; 6; 7 ] ~init:false ~f:(fun _ el ->
         if is_winning_move b el then true else false)
   in
-  if can_win then (42 + 1 - count_moves b) / 2 else negmax b 0 (-21) 21
+  if can_win then (42 + 1 - count_moves b) / 2
+  else
+    let moves = count_moves b in
+    let min = -(42 - moves) / 2 in
+    let max = (42 + 1 - moves) / 2 in
+    solver_helper b min max
 
 let get_scores (b : Board.t) : int list =
   List.fold [ 1; 2; 3; 4; 5; 6; 7 ] ~init:[] ~f:(fun accum el ->
