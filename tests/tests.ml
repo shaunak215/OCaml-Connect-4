@@ -74,31 +74,31 @@ let test_move _ =
   assert_equal (([ [P1;P2;P1;P2;P1;P2]; []; []; []; []; []; [] ], P1), false) @@ move ([ [P1;P2;P1;P2;P1;P2]; []; []; []; []; []; [] ], P1) 1;
 ;;
 
-let test_load_game _ = 
-  assert_equal ([ []; []; []; []; []; []; [] ], P1)  @@ load_game "" 1; 
-  assert_equal ([ [P1]; []; []; []; []; []; [] ], P2)  @@ load_game "1" 1;
-  assert_equal ([ [P1;P2]; []; []; []; []; []; [] ], P1)  @@ load_game "11" 1;
-  assert_equal ([ [P1]; [P2]; [P1]; [P2]; [P1]; [P2]; [P1] ], P2)  @@ load_game "1234567" 1;
-  assert_equal ([ [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2] ], P1)  @@ load_game "12345671234567" 1;
-  assert_equal ([ [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2] ], P1)  @@ load_game "11223344556677" 1;
+let test_decode_game _ = 
+  assert_equal ([ []; []; []; []; []; []; [] ], P1)  @@ decode_game "" 1; 
+  assert_equal ([ [P1]; []; []; []; []; []; [] ], P2)  @@ decode_game "1" 1;
+  assert_equal ([ [P1;P2]; []; []; []; []; []; [] ], P1)  @@ decode_game "11" 1;
+  assert_equal ([ [P1]; [P2]; [P1]; [P2]; [P1]; [P2]; [P1] ], P2)  @@ decode_game "1234567" 1;
+  assert_equal ([ [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2] ], P1)  @@ decode_game "12345671234567" 1;
+  assert_equal ([ [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2] ], P1)  @@ decode_game "11223344556677" 1;
 ;;
 
-let test_save_game _ = 
-  assert_equal ("",2) @@ save_game ([ []; []; []; []; []; []; [] ], P1);
-  assert_equal ("1",2) @@ save_game ([ [P1]; []; []; []; []; []; [] ], P2);
-  assert_equal ("11",2) @@ save_game ([ [P1;P2]; []; []; []; []; []; [] ], P1);
-  assert_equal ("1234567",2) @@ save_game ([ [P1]; [P2]; [P1]; [P2]; [P1]; [P2]; [P1] ], P2);
-  assert_equal ("12345671234567",2) @@ save_game ([ [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2] ], P1);
-  assert_equal ("11223344556677", 2) @@ save_game ([ [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2] ], P1);
-  assert_equal ("111111",2) @@ save_game ([ [P1;P2;P1;P2;P1;P2]; []; []; []; []; []; [] ], P1);
+let test_encode_game _ = 
+  assert_equal ("",2) @@ encode_game ([ []; []; []; []; []; []; [] ], P1);
+  assert_equal ("1",2) @@ encode_game ([ [P1]; []; []; []; []; []; [] ], P2);
+  assert_equal ("11",2) @@ encode_game ([ [P1;P2]; []; []; []; []; []; [] ], P1);
+  assert_equal ("1234567",2) @@ encode_game ([ [P1]; [P2]; [P1]; [P2]; [P1]; [P2]; [P1] ], P2);
+  assert_equal ("12345671234567",2) @@ encode_game ([ [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2]; [P2;P1]; [P1;P2] ], P1);
+  assert_equal ("11223344556677", 2) @@ encode_game ([ [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2]; [P1;P2] ], P1);
+  assert_equal ("111111",2) @@ encode_game ([ [P1;P2;P1;P2;P1;P2]; []; []; []; []; []; [] ], P1);
 ;;
 
 let game_tests = 
   "Game Tests" >: test_list [
     "New Game" >:: test_new_game;
     "Move" >:: test_move;
-    "Load Game" >:: test_load_game;
-    "Save Game" >:: test_save_game;
+    "Decode Game" >:: test_decode_game;
+    "Encode Game" >:: test_encode_game;
   ]
 
 let series = 
