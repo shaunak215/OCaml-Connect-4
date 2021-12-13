@@ -1,11 +1,82 @@
 [@@@ocaml.warning "-27"]
 
-let game_over winner =
+let game_over board winner request =
   <html>
+  <head>
+    <link rel="stylesheet" href="static/style.css">
+  </head> 
   <body>
-  <h1>Winner: <%s winner%></h1>
-  <body>
-  <html>
+  <div>
+    <h1><%s winner%> wins!</h1>
+    <div id="board" style="display: none;"><%s board%></div>
+    <div>
+    <%s! Dream.form_tag ~action:"/" request %>
+        <input type="hidden" name="reset" autofocus>
+        <button type="submit"> Reset </button>
+    </form>
+    </div>
+    <div class="container">
+      <table>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          </table>
+    </div>
+  </div>
+  <script src="static/app.js"></script>
+  </body>
+  </html>
 
 let goodbye =
   <html>
@@ -61,15 +132,14 @@ let game_in_progress ?message board player request =
     <h1><%s player%>'s turn</h1>
     <div id="board" style="display: none;"><%s board%></div>
     <div>
-    <%s! Dream.form_tag ~action:"/play" request %>
-        <input name="message" autofocus>
-      </form>
-    </div>
-    <div>
     <%s! Dream.form_tag ~action:"/save" request %>
         <input type="hidden" name="message" autofocus>
         <button type="submit"> Save </button>
-      </form>
+    </form>
+    <%s! Dream.form_tag ~action:"/" request %>
+        <input type="hidden" name="reset" autofocus>
+        <button type="submit"> Reset </button>
+    </form>
     </div>
     <div class="container">
       <table>
