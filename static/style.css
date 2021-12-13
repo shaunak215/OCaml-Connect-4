@@ -8,7 +8,7 @@ body {
     transform: translate(-50%);
     width: 600px;
     height: 520px;
-    top: 9rem;
+    top: 4rem;
     background: rgb(87, 168, 255);
     border: 2px solid black;
     padding: .5rem;
@@ -26,21 +26,50 @@ body {
 .button-container {
     position: relative;
     left: 50%;
+    top: 2.5rem;
     transform: translate(-50%);
     width: 600px;
     height: 80px;
-    top: 9rem;
     align-items: center;
     background: rgb(87, 168, 255);
     border: 2px solid black;
     padding: .5rem;
 }
 
-.button-container table form button{
+.col-selector {
     width: 82px;
     height: 80px;
     border: 2px solid black;
-    border-radius: 50%;
-    background-color: rgb(87, 168, 255);
+    background-color: rgb(165, 182, 199);
+    cursor: pointer;
+    margin: 1.75px;
+}
+
+.reset{
+    position: absolute;
+    top:5.5rem;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    padding: 0.3rem;
+    border: 1px solid black;
+    background: #ffffff;
     cursor: pointer;
 }
+
+.save{
+    position: absolute;
+    top:3rem;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    padding: 0.3rem;
+    border: 1px solid black;
+    background: #ffffff;
+    cursor: pointer;
+}
+
