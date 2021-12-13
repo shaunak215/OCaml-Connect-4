@@ -1,3 +1,7 @@
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
 body {
     background-color: #dcdcdc;
 }
@@ -82,12 +86,4 @@ body {
     height: 40px;
     align-items: center;
     padding: 0.5rem;
-}
-
-.options-container table tr td{
-    width: 90px;
-    height: 80px;
-    border: 2px solid black;
-    border-radius: 50%;
-    background-color: white;
 }
