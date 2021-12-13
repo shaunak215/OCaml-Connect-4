@@ -21,13 +21,13 @@ let get_first_player () : int =
 let rec play_game (b : Board.t) (last_col : int) (ai : bool) (play : bool) =
   match Board.game_over last_col b with
   | true, Board.Empty ->
-      print_string "The game ended in a tie!";
+      print_string "The game ended in a tie!"; Out_channel.flush stdout;
       exit 1
   | true, Board.P1 ->
-      print_string "P1 Won!";
+      print_string "P1 Won!"; Out_channel.flush stdout;
       exit 1
   | true, Board.P2 ->
-      print_string "P2 Won!";
+      print_string "P2 Won!"; Out_channel.flush stdout;
       exit 1
   | false, _ -> (
       print_string "\n";
@@ -48,7 +48,7 @@ let rec play_game (b : Board.t) (last_col : int) (ai : bool) (play : bool) =
               print_string "You entered an invalid column. Please try again\n";
             play_game b last_col ai false
         | 'q' ->
-            print_string "Goodbye!";
+            print_string "Goodbye!"; Out_channel.flush stdout;
             exit 1
         | _ ->
             print_string "You entered an invalid command. Please try again.\n"
