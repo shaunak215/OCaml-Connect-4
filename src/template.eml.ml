@@ -78,26 +78,97 @@ let game_over board winner request =
   </body>
   </html>
 
-let goodbye =
+let saved board request =
   <html>
+  <head>
+    <link rel="stylesheet" href="static/style.css">
+  </head> 
   <body>
-  <h1>Goodbye!!</h1>
-  <body>
-  <html>
+  <div>
+    <h1>You have saved this game! Reset to start a new game or load this one back up later!</h1>
+    <div id="board" style="display: none;"><%s board%></div>
+    <div>
+    <%s! Dream.form_tag ~action:"/" request %>
+        <input type="hidden" name="reset" autofocus>
+        <button type="submit"> Reset </button>
+    </form>
+    </div>
+    <div class="container">
+      <table>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          </table>
+    </div>
+  </div>
+  <script src="static/app.js"></script>
+  </body>
+  </html>
 
 let collect_players ?message request =
   <html>
   <body>
-    <h1> Please indicate how many players you have </h1>
-    <h2> One to play against the AI, two to play against someone else</h2>
-%   begin match message with
-%   | None -> ()
-%   | Some message ->
-      <p>You entered: <b><%s message %>!</b></p>
-%   end;
+    <h1> Welcome to Connect 4! </h1>
+    <h2> How many players will be playing? You can also load a game you have already saved.</h2>
 
     <%s! Dream.form_tag ~action:"/" request %>
-      <input name="players" autofocus>
+      <input type="hidden" name="players" value="1" autofocus>
+      <button type="submit"> 1 </button>
+    </form>
+    <%s! Dream.form_tag ~action:"/" request %>
+      <input type="hidden" name="players" value="2" autofocus>
+      <button type="submit"> 2 </button>
     </form>
     <%s! Dream.form_tag ~action:"/load" request %>
         <input type="hidden" name="ending" autofocus>
@@ -109,15 +180,15 @@ let collect_players ?message request =
 let player_order ?message request =
   <html>
   <body>
-    <h1> If you would like to go first enter (1). If you want to go second enter (2). </h1>
-%   begin match message with
-%   | None -> ()
-%   | Some message ->
-      <p>You entered: <b><%s message %>!</b></p>
-%   end;
+    <h1> Do you want to go first or second? </h1>
 
     <%s! Dream.form_tag ~action:"/" request %>
-      <input name="order" autofocus>
+      <input type="hidden" name="order" value="1"autofocus>
+      <button type="submit"> First </button>
+    </form>
+    <%s! Dream.form_tag ~action:"/" request %>
+      <input type="hidden" name="order" value="2"autofocus>
+      <button type="submit"> Second </button>
     </form>
   </body>
   </html>
