@@ -91,7 +91,7 @@ let () =
                  if Sys.file_exists_exn "saved_game.txt" then
                    Sys.remove "saved_game.txt";
                  Out_channel.write_lines "saved_game.txt" data;
-                 Dream.html Template.goodbye
+                 Dream.html (Template.saved (get_moves !board) request)
              | _ -> Dream.empty `Bad_Request);
          Dream.post "/load" (fun request ->
              match%lwt Dream.form request with
