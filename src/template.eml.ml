@@ -123,6 +123,39 @@ let game_in_progress ?message board player request =
               <td class="slot"></td>
               <td class="slot"></td>
           </tr>
+          </table>
+    </div>
+    <div class="button-container">
+      <table>
+      <%s! Dream.form_tag ~action:"/play" request %>
+        <input type="hidden" id="message" name="message" value="1" autofocus>
+        <button class="col-selector"> 1 </button>
+      </form>
+      <%s! Dream.form_tag ~action:"/play" request %>
+        <input type="hidden" id="message" name="message" value="2" autofocus>
+        <button class="col-selector"> 2 </button>
+      </form>
+      <%s! Dream.form_tag ~action:"/play" request %>
+        <input type="hidden" id="message" name="message" value="3" autofocus>
+        <button class="col-selector"> 3 </button>
+      </form>
+      <%s! Dream.form_tag ~action:"/play" request %>
+        <input type="hidden" id="message" name="message" value="4" autofocus>
+        <button class="col-selector"> 4 </button>
+      </form>
+      <%s! Dream.form_tag ~action:"/play" request %>
+        <input type="hidden" id="message" name="message" value="5" autofocus>
+        <button class = "col-selector"> 5 </button>
+      </form>
+      <%s! Dream.form_tag ~action:"/play" request %>
+        <input type="hidden" id="message" name="message" value="6" autofocus>
+        <button class = "col-selector"> 6 </button>
+      </form>
+      <%s! Dream.form_tag ~action:"/play" request %>
+        <input type="hidden" id="message" name="message" value="7" autofocus>
+        <button class = "col-selector">7</button>
+      </form>
+      <table>
     </div>
   </div>
   <script src="static/app.js"></script>
