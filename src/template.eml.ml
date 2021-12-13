@@ -252,6 +252,88 @@ let collect_players ?message request =
   </body>
   </html>
 
+let get_difficulty ?message request =
+  <html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/style.css">
+  </head> 
+  <body>
+    <div id="board" style="display: none;">""</div>
+    <h1> Would you like to play agains the hard or easy AI? </h1>
+
+    <%s! Dream.form_tag ~action:"/" request %>
+      <input type="hidden" name="difficulty" value="true"autofocus>
+      <button type="submit"> Hard </button>
+    </form>
+    <%s! Dream.form_tag ~action:"/" request %>
+      <input type="hidden" name="difficulty" value="false"autofocus>
+      <button type="submit"> Easy </button>
+    </form>
+    <div class="container">
+    <table>
+        <tr>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+        </tr>
+        <tr>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+        </tr>
+        <tr>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+        </tr>
+        <tr>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+        </tr>
+        <tr>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+        </tr>
+        <tr>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+            <td class="slot"></td>
+        </tr>
+        </table>
+  </div>
+  <script src="static/app.js"></script>
+  </body>
+  </html>
+  
 let player_order ?message request =
   <html>
   <head>

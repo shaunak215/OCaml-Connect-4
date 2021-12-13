@@ -24,13 +24,15 @@ let get_row (row : int) (b : player list list) : player list =
   @@ List.fold b ~init:[] ~f:(fun init l ->
          match List.nth l row with Some p -> p :: init | None -> Empty :: init)
 
-let load_game (encode : string) (num : int) (cur : int) : Board.t * int * int =
+let load_game (encode : string) (num : int) (cur : int) (ai : bool) :
+    Board.t * int * int * bool =
   let decode = decode_game encode in
-  (decode, num, cur)
+  (decode, num, cur, ai)
 
-let save_game (b : Board.t) (num : int) (cur : int) : string * int * int =
+let save_game (b : Board.t) (num : int) (cur : int) (ai : bool) :
+    string * int * int * bool =
   let _, _, compress = b in
-  (compress, num, cur)
+  (compress, num, cur, ai)
 
 let render (board : Board.t) : unit =
   let b, player, _ = board in
