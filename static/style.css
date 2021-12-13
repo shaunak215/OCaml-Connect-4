@@ -1,0 +1,25 @@
+body {
+    background-color: #dcdcdc;
+}
+
+.container{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    width: 600px;
+    height: 520px;
+    top: 9rem;
+    background: rgb(87, 168, 255);
+    border: 2px solid black;
+    padding: .5rem;
+
+}
+
+.container table tr td{
+    width: 90px;
+    height: 80px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
+}

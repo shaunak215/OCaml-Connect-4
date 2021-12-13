@@ -70,6 +70,7 @@ let () =
                         (Board.to_string next_player)
                         request)
              | _ -> Dream.empty `Bad_Request);
+         Dream.get "/static/**" (Dream.static "./static");
          (*Dream.get "/:board/:move"
            (fun request -> s
              let b_str = Dream.param "board" request in

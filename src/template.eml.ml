@@ -42,18 +42,76 @@ let player_order ?message request =
 
 let game_in_progress ?message board player request =
   <html>
+  <head>
+    <link rel="stylesheet" href="static/style.css">
+  </head> 
   <body>
-  <h1>board: <%s board%></h1>
-  <h1><%s player%>'s turn</h1>
-%   begin match message with
-%   | None -> ()
-%   | Some message ->
-      <p>You entered: <b><%s message %>!</b></p>
-%   end;
-
+  <div>
+    <h1><%s player%>'s turn</h1>
+    <div id="board" style="display: none;"><%s board%></div>
+    <div class="container">
+      <table>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+          <tr>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+              <td class="slot"></td>
+          </tr>
+    </div>
+    <div>
     <%s! Dream.form_tag ~action:"/play" request %>
-      <input name="message" autofocus>
-    </form>
-
+        <input name="message" autofocus>
+      </form>
+    </div>
+  </div>
+  <script src="static/app.js"></script>
   </body>
   </html>
