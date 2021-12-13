@@ -97,5 +97,16 @@ let get_best_col (l : int list) : int =
   in
   col
 
-let make_move (b : Board.t) : Board.t * int =
-  get_scores b |> get_best_col |> fun col -> (insert_piece col b, col)
+let get_valid_cols (b : Board.t) : int list =
+  List.fold [ 1; 2; 3; 4; 5; 6; 7 ] ~init:[] ~f:(fun accum el ->
+      if is_valid_move el b then el :: accum else accum)
+  |> List.rev
+
+let get_random_col (l : int list) : int = Random.int (List.length l)
+
+let make_move (b : Board.t) (ai : bool) : Board.t * int =
+  if ai then get_scores b |> get_best_col |> fun col -> (insert_piece col b, col)
+  else
+    let cols = get_valid_cols b in
+    let col = get_random_col cols in
+    (insert_piece col b, col)

@@ -33,7 +33,7 @@ let rec play_game (b : Board.t) (last_col : int) (ai : bool) (play : bool) =
       print_string "\n";
       Game.render b;
       if ai && play then
-        let new_b, col = Ai.make_move b in
+        let new_b, col = Ai.make_move b true in
         play_game new_b col ai false
       else print_string "Enter a column you wish to insert in: ";
       Out_channel.flush stdout;
