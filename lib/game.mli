@@ -14,8 +14,10 @@ val decode_game : string -> Board.t
     1st int value determines number of players 1 (against ai) or 2
     2nd int value is ignored if the number of players is 1, if there 
     are two then it indicates if the player is player 1 or 2
+    Boolean indicates if the player is playing the hard or easy ai
+
 *)
-val load_game : string -> int -> int -> Board.t * int * int
+val load_game : string -> int -> int -> bool -> Board.t * int * int * bool
 
 (*
     saves the current game state in the form of
@@ -23,8 +25,9 @@ val load_game : string -> int -> int -> Board.t * int * int
     1st int value determines number of players 1 (against ai) or 2
     2nd int value is a dummy value if the number of players is 1, if there 
     are two then it indicates if the player is player 1 or 2
+    Boolean value indicates if user is playing hard(true) or easy(false) ai
 *)
-val save_game : Board.t -> int -> int -> string * int * int
+val save_game : Board.t -> int -> int -> bool -> string * int * int * bool
 
 (*
     If move is completed return new board and true
