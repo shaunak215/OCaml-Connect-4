@@ -1,5 +1,4 @@
 open Board
-open Game
 open Core
 
 let min_score = -(42 / 2) + 3
@@ -10,7 +9,7 @@ let table =
     ?growth_allowed:(Some false) ?size:(Some 8388593)
 
 let count_moves (b : Board.t) : int =
-  let l, _ = b in
+  let l, _, _ = b in
   List.fold l ~init:0 ~f:(fun accum el -> accum + List.length el)
 
 let is_winning_move (b : Board.t) (col : int) : bool =
@@ -27,7 +26,7 @@ let rec negmax (b : Board.t) (depth : int) (alpha : int) (beta : int) : int =
       List.for_all [ 1; 2; 3; 4; 5; 6; 7 ] ~f:(fun el ->
           if is_valid_move el b && is_winning_move b el then false else true)
     then
-      let key = encode_game b in
+      let _, _, key = b in
       let v = Hashtbl.find table key in
       let max =
         if is_none v then (42 - 1 - moves) / 2
@@ -43,8 +42,8 @@ and negmax_helper (b : Board.t) (alpha : int) (beta : int) (col : int list)
     (depth : int) : int =
   match col with
   | [] ->
-      let compress = encode_game b in
-      Hashtbl.update table compress ~f:(fun _ -> alpha - min_score + 1);
+      let _, _, moves = b in
+      Hashtbl.update table moves ~f:(fun _ -> alpha - min_score + 1);
       alpha
   | hd :: tl ->
       if is_valid_move hd b then

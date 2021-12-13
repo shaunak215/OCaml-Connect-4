@@ -6,22 +6,22 @@ open Core
 *)
 type player = P1 | P2 | Empty
 
-type t = player list list * player
+type t = player list list * player * string
 
 let to_string (p : player) : string =
   match p with P1 -> "p1" | P2 -> "p2" | Empty -> "na"
 
-let init : t = ([ []; []; []; []; []; []; [] ], P1)
+let init : t = ([ []; []; []; []; []; []; [] ], P1, "")
 
 let is_valid_move (col : int) (brd : t) : bool =
   if Int.( < ) col 1 || Int.( > ) col 7 then false
   else
-    let b, _ = brd in
+    let b, _, _ = brd in
     let l = List.nth_exn b (col - 1) in
     if List.length l < 6 then true else false
 
 let insert_piece (col : int) (brd : t) : t =
-  let b, player = brd in
+  let b, player, moves = brd in
   let col_index = col - 1 in
   let new_brd =
     List.rev
@@ -30,8 +30,8 @@ let insert_piece (col : int) (brd : t) : t =
            else list :: init)
   in
   match player with
-  | P1 -> (new_brd, P2)
-  | P2 -> (new_brd, P1)
+  | P1 -> (new_brd, P2, String.concat [ moves; string_of_int col ])
+  | P2 -> (new_brd, P1, String.concat [ moves; string_of_int col ])
   | Empty -> failwith "empty in insert_piece"
 
 let is_tie (b : player list list) : bool =
@@ -44,21 +44,22 @@ let get_row (row : int) (b : player list list) : player list =
 
 let get_right_diagonal (row : int) (col : int) (b : player list list) :
     player list =
-    let rec top_of_diag (row : int) (col : int) : (int * int) =
-      if row + 1 <= 6 && col + 1 <= 5 then top_of_diag (row + 1) (col + 1)
-      else row, col
-    in
-    let rec iterate (r : int) (c : int) (diag_list : player list)
+  let rec top_of_diag (row : int) (col : int) : int * int =
+    if row + 1 <= 6 && col + 1 <= 5 then top_of_diag (row + 1) (col + 1)
+    else (row, col)
+  in
+  let rec iterate (r : int) (c : int) (diag_list : player list)
       (b : player list list) : player list =
     match List.nth b c with
     | None ->
-      if r >= 0 && c >= 0 then iterate (r - 1) (c - 1) (Empty :: diag_list) b
-      else diag_list
+        if r >= 0 && c >= 0 then iterate (r - 1) (c - 1) (Empty :: diag_list) b
+        else diag_list
     | Some l -> (
         match List.nth l r with
         | None ->
-          if r >= 0 && c >= 0 then iterate (r - 1) (c - 1) (Empty :: diag_list) b
-          else diag_list
+            if r >= 0 && c >= 0 then
+              iterate (r - 1) (c - 1) (Empty :: diag_list) b
+            else diag_list
         | Some p -> iterate (r - 1) (c - 1) (p :: diag_list) b)
   in
   let top_row, top_col = top_of_diag row col in
@@ -66,21 +67,22 @@ let get_right_diagonal (row : int) (col : int) (b : player list list) :
 
 let get_left_diagonal (row : int) (col : int) (b : player list list) :
     player list =
-  let rec top_of_diag (row : int) (col : int) : (int * int) =
+  let rec top_of_diag (row : int) (col : int) : int * int =
     if row + 1 <= 5 && col - 1 >= 0 then top_of_diag (row + 1) (col - 1)
-    else row, col
+    else (row, col)
   in
   let rec iterate (r : int) (c : int) (diag_list : player list)
       (b : player list list) : player list =
     match List.nth b c with
-    | None -> 
-      if r >= 0 && c <= 6 then iterate (r - 1) (c + 1) (Empty :: diag_list) b
-      else diag_list
+    | None ->
+        if r >= 0 && c <= 6 then iterate (r - 1) (c + 1) (Empty :: diag_list) b
+        else diag_list
     | Some l -> (
         match List.nth l r with
         | None ->
-          if r >= 0 && c <= 6 then iterate (r - 1) (c + 1) (Empty :: diag_list) b
-          else diag_list
+            if r >= 0 && c <= 6 then
+              iterate (r - 1) (c + 1) (Empty :: diag_list) b
+            else diag_list
         | Some p -> iterate (r - 1) (c + 1) (p :: diag_list) b)
   in
   let top_row, top_col = top_of_diag row col in
@@ -108,7 +110,7 @@ let is_win (col : int) (b : player list list) : bool =
   else false
 
 let game_over (col : int) (brd : t) =
-  let b, next_player = brd in
+  let b, next_player, _ = brd in
   if is_win col b then
     match next_player with
     | P1 -> (true, P2)

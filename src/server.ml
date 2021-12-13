@@ -9,6 +9,10 @@ let collecting = ref false
 
 let ai = ref false
 
+let get_moves (b : Board.t) : string =
+  let _, _, moves = b in
+  moves
+
 let () =
   Dream.run @@ Dream.logger @@ Dream.memory_sessions
   @@ Dream.router
@@ -20,39 +24,37 @@ let () =
              | `Ok [ ("players", message) ] ->
                  if int_of_string message = 2 then
                    Dream.html
-                     (Template.game_in_progress (Game.encode_game !board) "p1"
-                        request)
+                     (Template.game_in_progress (get_moves !board) "p1" request)
                  else
                    let _ = ai := true in
                    Dream.html (Template.player_order request)
              | `Ok [ ("order", message) ] ->
                  if int_of_string message = 1 then
                    Dream.html
-                     (Template.game_in_progress (Game.encode_game !board) "p1"
-                        request)
+                     (Template.game_in_progress (get_moves !board) "p1" request)
                  else
                    let new_board, col = Ai.make_move !board in
                    board := new_board;
                    Dream.html
-                     (Template.game_in_progress (Game.encode_game !board) "p2"
-                        request ~message:"4")
+                     (Template.game_in_progress (get_moves !board) "p2" request
+                        ~message:"4")
              | _ -> Dream.empty `Bad_Request);
          Dream.get "/play" (fun request ->
              Dream.html
-               (Template.game_in_progress (Game.encode_game !board) "p1" request));
+               (Template.game_in_progress (get_moves !board) "p1" request));
          Dream.post "/play" (fun request ->
              match%lwt Dream.form request with
              | `Ok [ ("message", message) ] ->
                  let move = int_of_string message in
                  let new_board, _ = Game.move !board move in
-                 let _, next_player = new_board in
+                 let _, next_player, _ = new_board in
                  let game_over, w_player = Board.game_over move new_board in
                  let winner = Board.to_string w_player in
                  board := new_board;
                  if game_over then Dream.html (Template.game_over winner)
                  else if !ai then (
                    let new_board, col = Ai.make_move !board in
-                   let _, next_player = new_board in
+                   let _, next_player, _ = new_board in
                    let game_over, w_player = Board.game_over col new_board in
                    let winner = Board.to_string w_player in
                    board := new_board;
@@ -60,13 +62,12 @@ let () =
                    else
                      Dream.html
                        (Template.game_in_progress ~message:(string_of_int col)
-                          (Game.encode_game !board)
+                          (get_moves !board)
                           (Board.to_string next_player)
                           request))
                  else
                    Dream.html
-                     (Template.game_in_progress ~message
-                        (Game.encode_game !board)
+                     (Template.game_in_progress ~message (get_moves !board)
                         (Board.to_string next_player)
                         request)
              | _ -> Dream.empty `Bad_Request);

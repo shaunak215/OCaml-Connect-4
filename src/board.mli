@@ -7,8 +7,9 @@ type player = P1 | P2 | Empty
 (*
     This is the type of the board
     In the actual implementation we plan to use a player list list
+    String to represent the move list
 *)
-type t = player list list * player
+type t = player list list * player * string
 
 val to_string : player -> string
 

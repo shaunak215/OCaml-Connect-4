@@ -10,12 +10,6 @@ val new_game : int -> Board.t
 val decode_game : string -> Board.t
 
 (*
-   Takes in a board and creates a string compression of the board.
-   Puts the moves in order of the column they happened in
-*)
-val encode_game : Board.t -> string
-
-(*
     initializes a saved game with that board
     1st int value determines number of players 1 (against ai) or 2
     2nd int value is ignored if the number of players is 1, if there 
