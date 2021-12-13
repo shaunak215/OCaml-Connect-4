@@ -1,4 +1,5 @@
 (library
  (name connect4)
  (modules board game ai)
- (libraries core))
+ (libraries core)
+ (preprocess (pps bisect_ppx)))
