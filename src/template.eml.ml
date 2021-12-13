@@ -172,20 +172,20 @@ let collect_players ?message request =
   </head> 
   <body>
     <h1> Connect 4! </h1>
-    <h2> How many players will be playing? You can also load a game you have already saved.</h2>
+    <h2> Select number of players or load a game</h2>
     <div class="options-container">
     <table>
       <%s! Dream.form_tag ~action:"/" request %>
         <input type="hidden" name="players" value="1" autofocus>
-        <button type="submit" class="col-selector"> 1 </button>
+        <button type="submit" class="options-selector"> 1 </button>
       </form>
       <%s! Dream.form_tag ~action:"/" request %>
         <input type="hidden" name="players" value="2" autofocus>
-        <button type="submit" class="col-selector"> 2 </button>
+        <button type="submit" class="options-selector"> 2 </button>
       </form>
       <%s! Dream.form_tag ~action:"/load" request %>
           <input type="hidden" name="ending" autofocus>
-          <button type="submit" class="col-selector"> Load Game </button>
+          <button type="submit" class="options-selector"> Load </button>
       </form>
     </table>
     </div>

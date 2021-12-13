@@ -6,13 +6,27 @@ body {
     background-color: #dcdcdc;
 }
 
+h1 {
+    position: absolute;
+    top: 0.5rem;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+h2 {
+    position:absolute;
+    top: 4rem;
+    left: 50%;
+    transform: translate(-50%);
+}
+
 .container{
     position: relative;
     left: 50%;
     transform: translate(-50%);
     width: 600px;
     height: 520px;
-    top: 4rem;
+    top: 12rem;
     background: rgb(87, 168, 255);
     border: 2px solid black;
     padding: .5rem;
@@ -80,10 +94,19 @@ body {
 .options-container {
     position: absolute;
     left: 50%;
-    top: 2.rem;
+    top: 9rem;
     transform: translate(-50%);
-    width: 600px;
     height: 40px;
     align-items: center;
     padding: 0.5rem;
+}
+
+.options-selector {
+    width: 82px;
+    height: 40px;
+    border: 2px solid black;
+    background-color: rgb(165, 182, 199);
+    cursor: pointer;
+    margin-left: 30px;
+
 }
