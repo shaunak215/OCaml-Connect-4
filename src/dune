@@ -1,15 +1,12 @@
-(library
- (name connect4)
- (modules board game ai)
- (libraries core))
-
 (executable
  (name server)
  (modules server template)
  (libraries dream connect4)
- (preprocess (pps lwt_ppx)))
+ (preprocess
+  (pps lwt_ppx)))
 
 (rule
  (targets template.ml)
  (deps template.eml.ml)
- (action (run dream_eml %{deps} --workspace %{workspace_root})))
+ (action
+  (run dream_eml %{deps} --workspace %{workspace_root})))

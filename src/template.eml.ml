@@ -162,7 +162,7 @@ let collect_players ?message request =
     <link rel="stylesheet" href="static/style.css">
   </head> 
   <body>
-    <h1> Welcome to Connect 4! </h1>
+    <h1> Connect 4! </h1>
     <h2> How many players will be playing? You can also load a game you have already saved.</h2>
 
     <%s! Dream.form_tag ~action:"/" request %>

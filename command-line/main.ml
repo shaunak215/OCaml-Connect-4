@@ -1,4 +1,4 @@
-(* open Core
+open Core
 open Connect4
 
 let get_input (s : string) : char =
@@ -67,4 +67,4 @@ let () =
   let players, first = setup () in
   if players = 1 && first then play_game Board.init 1 true false
   else if players = 1 then play_game Board.init 1 true true
-  else play_game Board.init 1 false false *)
+  else play_game Board.init 1 false false
