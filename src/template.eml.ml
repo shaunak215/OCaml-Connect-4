@@ -7,6 +7,13 @@ let game_over winner =
   <body>
   <html>
 
+let goodbye =
+  <html>
+  <body>
+  <h1>Goodbye!!</h1>
+  <body>
+  <html>
+
 let collect_players ?message request =
   <html>
   <body>
@@ -49,6 +56,17 @@ let game_in_progress ?message board player request =
   <div>
     <h1><%s player%>'s turn</h1>
     <div id="board" style="display: none;"><%s board%></div>
+    <div>
+    <%s! Dream.form_tag ~action:"/play" request %>
+        <input name="message" autofocus>
+      </form>
+    </div>
+    <div>
+    <%s! Dream.form_tag ~action:"/save" request %>
+        <input type="hidden" name="message" autofocus>
+        <button type="submit"> Save </button>
+      </form>
+    </div>
     <div class="container">
       <table>
           <tr>
@@ -105,11 +123,6 @@ let game_in_progress ?message board player request =
               <td class="slot"></td>
               <td class="slot"></td>
           </tr>
-    </div>
-    <div>
-    <%s! Dream.form_tag ~action:"/play" request %>
-        <input name="message" autofocus>
-      </form>
     </div>
   </div>
   <script src="static/app.js"></script>

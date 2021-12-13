@@ -9,6 +9,8 @@ let collecting = ref false
 
 let ai = ref false
 
+let ai_player = ref 0
+
 let get_moves (b : Board.t) : string =
   let _, _, moves = b in
   moves
@@ -30,11 +32,13 @@ let () =
                    Dream.html (Template.player_order request)
              | `Ok [ ("order", message) ] ->
                  if int_of_string message = 1 then
+                   let _ = ai_player := 2 in
                    Dream.html
                      (Template.game_in_progress (get_moves !board) "p1" request)
                  else
                    let new_board, col = Ai.make_move !board in
                    board := new_board;
+                   ai_player := 1;
                    Dream.html
                      (Template.game_in_progress (get_moves !board) "p2" request
                         ~message:"4")
@@ -70,6 +74,21 @@ let () =
                      (Template.game_in_progress ~message (get_moves !board)
                         (Board.to_string next_player)
                         request)
+             | _ -> Dream.empty `Bad_Request);
+         Dream.post "/save" (fun request ->
+             match%lwt Dream.form request with
+             | `Ok _ ->
+                 let num_players = if !ai then 1 else 2 in
+                 let moves, players, first =
+                   Game.save_game !board num_players !ai_player
+                 in
+                 let data =
+                   [ moves; string_of_int players; string_of_int first ]
+                 in
+                 if Sys.file_exists_exn "saved_game.txt" then
+                   Sys.remove "saved_game.txt";
+                 Out_channel.write_lines "saved_game.txt" data;
+                 Dream.html Template.goodbye
              | _ -> Dream.empty `Bad_Request);
          Dream.get "/static/**" (Dream.static "./static");
          (*Dream.get "/:board/:move"
