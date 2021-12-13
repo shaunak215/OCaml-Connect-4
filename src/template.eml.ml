@@ -28,6 +28,10 @@ let collect_players ?message request =
     <%s! Dream.form_tag ~action:"/" request %>
       <input name="players" autofocus>
     </form>
+    <%s! Dream.form_tag ~action:"/load" request %>
+        <input type="hidden" name="ending" autofocus>
+        <button type="submit"> Load Game </button>
+      </form>
   </body>
   </html>
 
