@@ -5,8 +5,6 @@ open Connect4
 
 let board = ref Connect4.Board.init
 
-let collecting = ref false
-
 let ai = ref false
 
 let ai_player = ref 0
@@ -89,6 +87,46 @@ let () =
                    Sys.remove "saved_game.txt";
                  Out_channel.write_lines "saved_game.txt" data;
                  Dream.html Template.goodbye
+             | _ -> Dream.empty `Bad_Request);
+         Dream.post "/load" (fun request ->
+             match%lwt Dream.form request with
+             | `Ok [ ("ending", ending) ] ->
+                 if Sys.file_exists_exn "saved_game.txt" then (
+                   let input = In_channel.read_lines "saved_game.txt" in
+                   let moves =
+                     if List.length input = 3 then List.nth_exn input 0 else ""
+                   in
+                   let players = int_of_string @@ List.nth_exn input 1 in
+                   let ai_play = int_of_string @@ List.nth_exn input 2 in
+                   board := Game.decode_game moves;
+                   let _, cur_player, _ = !board in
+                   if players = 1 then ai := true;
+                   if ai_play = 2 then ai_player := 2
+                   else if ai_play = 1 then ai_player := 1
+                   else ai_player := 0;
+                   if
+                     (not !ai)
+                     || (String.length moves mod 2 = 0 && ai_play = 2)
+                     || (String.length moves mod 2 = 1 && ai_play = 1)
+                   then
+                     Dream.html
+                       (Template.game_in_progress moves
+                          (Board.to_string cur_player)
+                          request)
+                   else
+                     let new_board, col = Ai.make_move !board in
+                     let _, next_player, _ = new_board in
+                     let game_over, w_player = Board.game_over col new_board in
+                     let winner = Board.to_string w_player in
+                     board := new_board;
+                     if game_over then Dream.html (Template.game_over winner)
+                     else
+                       Dream.html
+                         (Template.game_in_progress ~message:(string_of_int col)
+                            (get_moves !board)
+                            (Board.to_string next_player)
+                            request))
+                 else Dream.html (Template.collect_players request)
              | _ -> Dream.empty `Bad_Request);
          Dream.get "/static/**" (Dream.static "./static");
          (*Dream.get "/:board/:move"
