@@ -26,7 +26,7 @@ let () =
              | `Ok [ ("players", message) ] ->
                  if int_of_string message = 2 then
                    Dream.html
-                     (Template.game_in_progress (get_moves !board) "p1" request)
+                     (Template.game_in_progress (get_moves !board) "Red" request)
                  else
                    let _ = ai := true in
                    Dream.html (Template.get_difficulty request)
@@ -38,13 +38,13 @@ let () =
                  if int_of_string message = 1 then
                    let _ = ai_player := 2 in
                    Dream.html
-                     (Template.game_in_progress (get_moves !board) "p1" request)
+                     (Template.game_in_progress (get_moves !board) "Red" request)
                  else
                    let new_board, col = Ai.make_move !board !ai_difficulty in
                    board := new_board;
                    ai_player := 1;
                    Dream.html
-                     (Template.game_in_progress (get_moves !board) "p2" request
+                     (Template.game_in_progress (get_moves !board) "Yellow" request
                         ~message:"4")
              | `Ok [ ("reset", message) ] ->
                  ai := false;
@@ -55,7 +55,7 @@ let () =
              | _ -> Dream.empty `Bad_Request);
          Dream.get "/play" (fun request ->
              Dream.html
-               (Template.game_in_progress (get_moves !board) "p1" request));
+               (Template.game_in_progress (get_moves !board) "Red" request));
          Dream.post "/play" (fun request ->
              match%lwt Dream.form request with
              | `Ok [ ("message", message) ] ->

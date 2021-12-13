@@ -10,14 +10,19 @@ let game_over board winner request =
   </head> 
   <body>
   <div>
-    <h1><%s winner%> wins!</h1>
-    <div id="board" style="display: none;"><%s board%></div>
-    <div>
-    <%s! Dream.form_tag ~action:"/" request %>
+    <h1> Connect 4! </h1>
+    <h2> <%s winner%> wins! </h2>
+
+    <div class="options-container">
+    <table>
+      <%s! Dream.form_tag ~action:"/" request %>
         <input type="hidden" name="reset" autofocus>
-        <button type="submit" class="reset"> Reset </button>
-    </form>
+        <button type="submit" class="options-selector"> Reset </button>
+      </form>
+    </table>
     </div>
+
+    <div id="board" style="display: none;"><%s board%></div>
     <div class="container">
       <table>
           <tr>
@@ -91,14 +96,19 @@ let saved board request =
   </head> 
   <body>
   <div>
-    <h1>You have saved this game! Reset to start a new game or load this one back up later!</h1>
-    <div id="board" style="display: none;"><%s board%></div>
-    <div>
-    <%s! Dream.form_tag ~action:"/" request %>
+    <h1> Connect 4!</h1>
+    <h2> Game saved! Reset to play a new game or load this one</h2>
+    
+    <div class="options-container">
+    <table>
+      <%s! Dream.form_tag ~action:"/" request %>
         <input type="hidden" name="reset" autofocus>
-        <button type="submit" class="reset"> Reset </button>
-    </form>
+        <button type="submit" class="options-selector"> Reset </button>
+      </form>
+    </table>
     </div>
+    
+    <div id="board" style="display: none;"><%s board%></div>
     <div class="container">
       <table>
           <tr>
@@ -172,7 +182,7 @@ let collect_players ?message request =
   </head> 
   <body>
     <h1> Connect 4! </h1>
-    <h2> Select number of players or load a game</h2>
+    <h2> Select number of players or load a game </h2>
     <div class="options-container">
     <table>
       <%s! Dream.form_tag ~action:"/" request %>
@@ -262,16 +272,20 @@ let get_difficulty ?message request =
   </head> 
   <body>
     <div id="board" style="display: none;">""</div>
-    <h1> Would you like to play agains the hard or easy AI? </h1>
-
-    <%s! Dream.form_tag ~action:"/" request %>
-      <input type="hidden" name="difficulty" value="true"autofocus>
-      <button type="submit"> Hard </button>
-    </form>
+    <h1> Connect 4! </h1>
+    <h2> Would you like to play against the hard or easy AI? </h2>
+    <div class="options-container">
+    <table>
     <%s! Dream.form_tag ~action:"/" request %>
       <input type="hidden" name="difficulty" value="false"autofocus>
-      <button type="submit"> Easy </button>
+      <button type="submit" class="options-selector"> Easy </button>
     </form>
+    <%s! Dream.form_tag ~action:"/" request %>
+      <input type="hidden" name="difficulty" value="true"autofocus>
+      <button type="submit" class="options-selector"> Hard </button>
+    </form>
+    </table>
+    </div>
     <div class="container">
     <table>
         <tr>
@@ -344,16 +358,20 @@ let player_order ?message request =
   </head> 
   <body>
     <div id="board" style="display: none;">""</div>
-    <h1> Do you want to go first or second? </h1>
-
+    <h1> Connect 4! </h1>
+    <h2> Do you want to go first or second? </h2>
+    <div class="options-container">
+    <table>
     <%s! Dream.form_tag ~action:"/" request %>
       <input type="hidden" name="order" value="1"autofocus>
-      <button type="submit"> First </button>
+      <button type="submit" class="options-selector"> First </button>
     </form>
     <%s! Dream.form_tag ~action:"/" request %>
       <input type="hidden" name="order" value="2"autofocus>
-      <button type="submit"> Second </button>
+      <button type="submit" class="options-selector"> Second </button>
     </form>
+    </table>
+    </div>
     <div class="container">
     <table>
         <tr>
@@ -426,20 +444,23 @@ let game_in_progress ?message board player request =
   </head> 
   <body>
   <div>
-    <h1><%s player%>'s turn</h1>
-    <div id="board" style="display: none;"><%s board%></div>
-    <div>
-    <%s! Dream.form_tag ~action:"/save" request %>
+    <h1> Connect 4! </h1>
+    <h2> <%s player%>'s turn </h2>
+
+    <div class="options-container">
+    <table>
+      <%s! Dream.form_tag ~action:"/save" request %>
         <input type="hidden" name="message" autofocus>
-        <button type="submit" class="save" > Save Game</button>
-    </form>
-    </div>
-    <div>
-    <%s! Dream.form_tag ~action:"/" request %>
+        <button type="submit" class="options-selector"> Save </button>
+      </form>
+      <%s! Dream.form_tag ~action:"/" request %>
         <input type="hidden" name="reset" autofocus>
-        <button type="submit" class="reset"> Reset Game</button>
-    </form>
+        <button type="submit" class="options-selector"> Reset </button>
+      </form>
+    </table>
     </div>
+
+    <div id="board" style="display: none;"><%s board%></div>
     <div class="container">
       <table>
           <tr>

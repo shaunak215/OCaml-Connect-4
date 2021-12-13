@@ -25,7 +25,7 @@ h2 {
     left: 50%;
     transform: translate(-50%);
     width: 600px;
-    height: 520px;
+    height: 500px;
     top: 12rem;
     background: rgb(87, 168, 255);
     border: 2px solid black;
@@ -44,7 +44,7 @@ h2 {
 .button-container {
     position: relative;
     left: 50%;
-    top: 2.5rem;
+    top: 12.2rem;
     transform: translate(-50%);
     width: 600px;
     height: 80px;
@@ -61,34 +61,6 @@ h2 {
     background-color: rgb(165, 182, 199);
     cursor: pointer;
     margin: 1.75px;
-}
-
-.reset{
-    position: absolute;
-    top:5.5rem;
-    left: 50%;
-    transform: translate(-50%);
-    width: 100px;
-    height: 30px;
-    text-align: center;
-    padding: 0.3rem;
-    border: 1px solid black;
-    background: #ffffff;
-    cursor: pointer;
-}
-
-.save{
-    position: absolute;
-    top:3rem;
-    left: 50%;
-    transform: translate(-50%);
-    width: 100px;
-    height: 30px;
-    text-align: center;
-    padding: 0.3rem;
-    border: 1px solid black;
-    background: #ffffff;
-    cursor: pointer;
 }
 
 .options-container {
