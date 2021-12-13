@@ -9,7 +9,7 @@ type player = P1 | P2 | Empty
 type t = player list list * player * string
 
 let to_string (p : player) : string =
-  match p with P1 -> "p1" | P2 -> "p2" | Empty -> "na"
+  match p with P1 -> "Red" | P2 -> "Yellow" | Empty -> "Nobody"
 
 let init : t = ([ []; []; []; []; []; []; [] ], P1, "")
 
