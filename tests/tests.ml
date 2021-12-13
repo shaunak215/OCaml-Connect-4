@@ -3,8 +3,6 @@ open OUnit2;;
 open Connect4.Board;;
 open Connect4.Game;;
 
-(* we should have diff files for testing the board and game and diff files but not sure how to do that *)
-
 let test_player_string _ = 
   let p1 = P1 in let p2 = P2 in let emp = Empty in 
   assert_equal "p1" @@ to_string p1;

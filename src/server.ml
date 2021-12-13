@@ -34,7 +34,7 @@ let () =
                    Dream.html
                      (Template.game_in_progress (get_moves !board) "p1" request)
                  else
-                   let new_board, col = Ai.make_move !board in
+                   let new_board, col = Ai.make_move !board true in
                    board := new_board;
                    ai_player := 1;
                    Dream.html
@@ -62,7 +62,7 @@ let () =
                    Dream.html
                      (Template.game_over (get_moves !board) winner request)
                  else if !ai then (
-                   let new_board, col = Ai.make_move !board in
+                   let new_board, col = Ai.make_move !board true in
                    let _, next_player, _ = new_board in
                    let game_over, w_player = Board.game_over col new_board in
                    let winner = Board.to_string w_player in
@@ -123,7 +123,7 @@ let () =
                           (Board.to_string cur_player)
                           request)
                    else
-                     let new_board, col = Ai.make_move !board in
+                     let new_board, col = Ai.make_move !board true in
                      let _, next_player, _ = new_board in
                      let game_over, w_player = Board.game_over col new_board in
                      let winner = Board.to_string w_player in
