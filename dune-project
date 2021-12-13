@@ -5,10 +5,14 @@
 (package
  (name server)
  (synopsis "An OCaml library for Playing Connect4")
- (description "A longer description")
+ (description
+  "This library allowed users to play connect4 on a web server using Dream. \n\n There are options to play against an Ai or another player. ")
  (depends
-  (ounit2 (> 2.0)) ; for each opam dependency list the version
-  (core (> 0.14.1)) ; `opam list core` will display which version of core you have
-  (dream (> 1.0.0~alpha2))
-  (lwt (> 5.4.2))
-))
+  (ounit2
+   (> 2.0)) 
+  (core
+   (> 0.14.1)) 
+  (dream
+   (> 1.0.0~alpha2))
+  (lwt
+   (> 5.4.2))))
