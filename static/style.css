@@ -3,7 +3,7 @@ body {
 }
 
 .container{
-    position: absolute;
+    position: relative;
     left: 50%;
     transform: translate(-50%);
     width: 600px;
@@ -21,5 +21,26 @@ body {
     border: 2px solid black;
     border-radius: 50%;
     background-color: white;
+}
+
+.button-container {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    width: 600px;
+    height: 80px;
+    top: 9rem;
+    align-items: center;
+    background: rgb(87, 168, 255);
+    border: 2px solid black;
+    padding: .5rem;
+}
+
+.button-container table form button{
+    width: 82px;
+    height: 80px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: rgb(87, 168, 255);
     cursor: pointer;
 }
