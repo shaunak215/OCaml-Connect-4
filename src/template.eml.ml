@@ -3,6 +3,7 @@
 let game_over board winner request =
   <html>
   <head>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/style.css">
   </head> 
   <body>
@@ -81,6 +82,7 @@ let game_over board winner request =
 let saved board request =
   <html>
   <head>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/style.css">
   </head> 
   <body>
@@ -159,6 +161,7 @@ let saved board request =
 let collect_players ?message request =
   <html>
   <head>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/style.css">
   </head> 
   <body>
@@ -246,6 +249,7 @@ let collect_players ?message request =
 let player_order ?message request =
   <html>
   <head>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/style.css">
   </head> 
   <body>
@@ -325,6 +329,7 @@ let player_order ?message request =
 let game_in_progress ?message board player request =
   <html>
   <head>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/style.css">
   </head> 
   <body>
