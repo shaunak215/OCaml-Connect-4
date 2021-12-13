@@ -5,9 +5,9 @@ open Connect4.Game;;
 
 let test_player_string _ = 
   let p1 = P1 in let p2 = P2 in let emp = Empty in 
-  assert_equal "p1" @@ to_string p1;
-  assert_equal "p2" @@ to_string p2;
-  assert_equal "na" @@ to_string emp
+  assert_equal "Red" @@ to_string p1;
+  assert_equal "Yellow" @@ to_string p2;
+  assert_equal "Nobody" @@ to_string emp
 ;;
 
 let test_init _ = 
