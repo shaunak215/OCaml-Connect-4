@@ -38,13 +38,13 @@ let () =
                  if int_of_string message = 1 then
                    let _ = ai_player := 2 in
                    Dream.html
-                     (Template.game_in_progress (get_moves !board) "Red" request)
+                     (Template.game_in_progress (get_moves !board) "Player" request)
                  else
                    let new_board, col = Ai.make_move !board !ai_difficulty in
                    board := new_board;
                    ai_player := 1;
                    Dream.html
-                     (Template.game_in_progress (get_moves !board) "Yellow" request
+                     (Template.game_in_progress (get_moves !board) "Player" request
                         ~message:"4")
              | `Ok [ ("reset", message) ] ->
                  ai := false;
@@ -70,7 +70,6 @@ let () =
                      (Template.game_over (get_moves !board) winner request)
                  else if !ai then (
                    let new_board, col = Ai.make_move !board !ai_difficulty in
-                   let _, next_player, _ = new_board in
                    let game_over, w_player = Board.game_over col new_board in
                    let winner = Board.to_string w_player in
                    board := new_board;
@@ -81,7 +80,7 @@ let () =
                      Dream.html
                        (Template.game_in_progress ~message:(string_of_int col)
                           (get_moves !board)
-                          (Board.to_string next_player)
+                          ("Player")
                           request))
                  else
                    Dream.html
