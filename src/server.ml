@@ -3,19 +3,16 @@
 open Core
 open Connect4
 
-let board = ref Connect4.Board.init
-
-let ai = ref false
-
-let ai_player = ref 0
-
-let ai_difficulty = ref true
-
 let get_moves (b : Board.t) : string =
   let _, _, moves = b in
   moves
 
 let () =
+  let board = ref Connect4.Board.init in
+  let ai = ref false in
+  let ai_player = ref 0 in
+  let ai_difficulty = ref true in
+
   Dream.run @@ Dream.logger @@ Dream.memory_sessions
   @@ Dream.router
        [
