@@ -128,7 +128,9 @@ let load (request : Dream.request) : Dream.response Lwt.t =
   else Dream.html (Template.collect_players request)
 
 let () =
-  Dream.run @@ Dream.logger @@ Dream.memory_sessions
+  Dream.run 
+  @@ Dream.logger 
+  @@ Dream.memory_sessions
   @@ Dream.router
        [
          Dream.get "/" (fun request ->
