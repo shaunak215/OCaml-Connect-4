@@ -135,18 +135,19 @@ let () =
                    else ai_player := 0;
                    if ai_diff then ai_difficulty := true
                    else ai_difficulty := false;
-                   if
-                     (not !ai)
-                     || (String.length moves mod 2 = 0 && ai_play = 2)
-                     || (String.length moves mod 2 = 1 && ai_play = 1)
-                   then
+                   if not !ai then
                      Dream.html
                        (Template.game_in_progress moves
                           (Board.to_string cur_player)
                           request)
+                   else if
+                     (String.length moves mod 2 = 0 && ai_play = 2)
+                     || (String.length moves mod 2 = 1 && ai_play = 1)
+                   then
+                     Dream.html
+                       (Template.game_in_progress moves "Player" request)
                    else
                      let new_board, col = Ai.make_move !board !ai_difficulty in
-                     let _, next_player, _ = new_board in
                      let game_over, w_player = Board.game_over col new_board in
                      let winner = Board.to_string w_player in
                      board := new_board;
@@ -156,9 +157,7 @@ let () =
                      else
                        Dream.html
                          (Template.game_in_progress ~message:(string_of_int col)
-                            (get_moves !board)
-                            (Board.to_string next_player)
-                            request))
+                            (get_moves !board) "Player" request))
                  else Dream.html (Template.collect_players request)
              | _ -> Dream.empty `Bad_Request);
          Dream.get "/static/**" (Dream.static "./static");
