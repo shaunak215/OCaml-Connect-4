@@ -1,9 +1,7 @@
-[@@@ocaml.warning "-27"]
-
 open Board
 open Core
 
-let new_game (p : int) : Board.t = init
+let new_game (_ : int) : Board.t = init
 
 let move (board : Board.t) (col : int) : Board.t * bool =
   if is_valid_move col board then (insert_piece col board, true)
