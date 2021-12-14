@@ -61,10 +61,15 @@ let () =
                  let new_board, valid = Game.move !board move in
                  if not valid then
                    let _, cur_player, moves = !board in
-                   Dream.html
-                     (Template.game_in_progress ~message moves
-                        (Board.to_string cur_player)
-                        request)
+                   if not !ai then
+                     Dream.html
+                       (Template.game_in_progress ~message moves
+                          (Board.to_string cur_player)
+                          request)
+                   else
+                     Dream.html
+                       (Template.game_in_progress ~message moves "Player"
+                          request)
                  else
                    let _, next_player, _ = new_board in
                    let game_over, w_player = Board.game_over move new_board in
