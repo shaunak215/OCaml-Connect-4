@@ -6,13 +6,13 @@
  (name server)
  (synopsis "An OCaml library for Playing Connect4")
  (description
-  "This library allowed users to play connect4 on a web server using Dream. \n\n There are options to play against an Ai or another player. ")
+  "This library allowed users to play connect4 on a web server using Dream. There are options to play against an Ai or another player. ")
  (depends
   (ounit2
    (> 2.0)) 
   (core
    (> 0.14.1)) 
   (dream
-   (> 1.0.0~alpha2))
+   (= 1.0.0~alpha2))
   (lwt
    (> 5.4.2))))
