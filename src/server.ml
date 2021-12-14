@@ -38,14 +38,15 @@ let () =
                  if int_of_string message = 1 then
                    let _ = ai_player := 2 in
                    Dream.html
-                     (Template.game_in_progress (get_moves !board) "Player" request)
+                     (Template.game_in_progress (get_moves !board) "Player"
+                        request)
                  else
                    let new_board, col = Ai.make_move !board !ai_difficulty in
                    board := new_board;
                    ai_player := 1;
                    Dream.html
-                     (Template.game_in_progress (get_moves !board) "Player" request
-                        ~message:"4")
+                     (Template.game_in_progress (get_moves !board) "Player"
+                        request ~message:"4")
              | `Ok [ ("reset", message) ] ->
                  ai := false;
                  ai_player := 0;
@@ -60,33 +61,38 @@ let () =
              match%lwt Dream.form request with
              | `Ok [ ("message", message) ] ->
                  let move = int_of_string message in
-                 let new_board, _ = Game.move !board move in
-                 let _, next_player, _ = new_board in
-                 let game_over, w_player = Board.game_over move new_board in
-                 let winner = Board.to_string w_player in
-                 board := new_board;
-                 if game_over then
+                 let new_board, valid = Game.move !board move in
+                 if not valid then
+                   let _, cur_player, moves = !board in
                    Dream.html
-                     (Template.game_over (get_moves !board) winner request)
-                 else if !ai then (
-                   let new_board, col = Ai.make_move !board !ai_difficulty in
-                   let game_over, w_player = Board.game_over col new_board in
+                     (Template.game_in_progress ~message moves
+                        (Board.to_string cur_player)
+                        request)
+                 else
+                   let _, next_player, _ = new_board in
+                   let game_over, w_player = Board.game_over move new_board in
                    let winner = Board.to_string w_player in
                    board := new_board;
                    if game_over then
                      Dream.html
                        (Template.game_over (get_moves !board) winner request)
+                   else if !ai then (
+                     let new_board, col = Ai.make_move !board !ai_difficulty in
+                     let game_over, w_player = Board.game_over col new_board in
+                     let winner = Board.to_string w_player in
+                     board := new_board;
+                     if game_over then
+                       Dream.html
+                         (Template.game_over (get_moves !board) winner request)
+                     else
+                       Dream.html
+                         (Template.game_in_progress ~message:(string_of_int col)
+                            (get_moves !board) "Player" request))
                    else
                      Dream.html
-                       (Template.game_in_progress ~message:(string_of_int col)
-                          (get_moves !board)
-                          ("Player")
-                          request))
-                 else
-                   Dream.html
-                     (Template.game_in_progress ~message (get_moves !board)
-                        (Board.to_string next_player)
-                        request)
+                       (Template.game_in_progress ~message (get_moves !board)
+                          (Board.to_string next_player)
+                          request)
              | _ -> Dream.empty `Bad_Request);
          Dream.post "/save" (fun request ->
              match%lwt Dream.form request with
