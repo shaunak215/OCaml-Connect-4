@@ -1,0 +1,27 @@
+(rule
+  (target connect4.zip)
+  (deps 
+    src/server.ml
+    src/template.eml.ml
+    src/dune
+    lib/ai.ml
+    lib/ai.mli
+    lib/board.ml
+    lib/board.mli
+    lib/game.ml
+    lib/game.mli
+    lib/dune
+    command-line/main.ml
+    command-line/dune
+    static/app.js
+    static/style.css
+    tests/tests.ml
+    tests/dune
+    dune
+    dune-project
+    README.md
+    server.opam
+  )
+
+  (action
+    (run zip -R connect4.zip %{deps})))
